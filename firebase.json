@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "public",
+    "public": "hjemmeside/build",
     "ignore": [
       "firebase.json",
       "**/.*",
