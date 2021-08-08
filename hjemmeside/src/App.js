@@ -6,7 +6,7 @@ import { Route, Switch } from 'react-router-dom';
 import Home from './pages/home';
 import Error from './pages/error';
 
-import { theme } from './colors'
+import { theme } from './colortheme'
 import AddNew from './pages/addNew';
 import Signin from './pages/Signin';
 import Signup from './pages/Signup';

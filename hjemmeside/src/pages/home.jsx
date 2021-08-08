@@ -34,18 +34,14 @@ export default function Home() {
 
     const filterLoadouts = (searchevent) => {
         const searchterm = searchevent.target.value;
-        console.log(searchterm);
         let filteredAcc = {};
         Object.keys(loadouts).map((item, _i) => {
             let loadout = loadouts[item];
             if (loadout.name.includes(searchterm)) {
-                console.log(loadout.name);
                 filteredAcc[item] = loadout;
             }
         })
-        console.log(filteredAcc);
         setFilteredLoadouts(filteredAcc)
-        console.log("filtered:", filteredAcc);
         
 
 }
@@ -53,8 +49,8 @@ export default function Home() {
 return (
     <>
         <Header></Header>
-        <FilterBar filterLoadouts={filterLoadouts}></FilterBar>
         <Container className={classes.rootContainer}>
+        <FilterBar filterLoadouts={filterLoadouts}></FilterBar>
             {loadouts.length === 0 ?
                 <><CircularProgress /><p>loading</p></>
                 :
