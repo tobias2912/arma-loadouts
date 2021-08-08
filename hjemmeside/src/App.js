@@ -1,24 +1,16 @@
 import React from 'react';
 import './App.css';
 import Sidebar from "./Sidebar";
-import Title from "./Title";
-import Footer from "./Footer";
-import Section from "./Section";
 import Helmet from "react-helmet";
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { Container, Grid } from '@material-ui/core';
+import { colors, Container, Grid } from '@material-ui/core';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Home from './pages/home';
+import Error from './pages/error';
 
-const theme = createMuiTheme({
-  palette: {
-    secondary: {
-      main: '#ffffff'
-    },
-    primary: {
-      main: '#ffff00'
-    }
-  }
-});
+import {theme} from './colors'
+import AddNew from './pages/addNew';
 
 function App() {
   return (
@@ -33,17 +25,24 @@ function App() {
             content="minimum-scale=1, initial-scale=1, width=device-width"
           />
         </Helmet>
-        <Title />
-        <Sidebar />
-        <Container maxwidth="sm">
-          <Grid>
-            <Section filename='## overskrift Hjemmeside  <br> # this is stuff' />
-            <Section filename='### overskrift Hjemmeside  sadas' />
+        <main>
+          <Switch>
+            <Route path="/" component={Home} exact />
+            <Route path="/addLoadout" component={AddNew} exact />
+            <Route component={Error} />
+          </Switch>
+        </main>
+        {/* <Title />
+          <Sidebar />
+          <Container maxwidth="sm">
+            <Grid>
+              <Section filename='## overskrift Hjemmeside  <br> # this is stuff' />
+              <Section filename='### overskrift Hjemmeside  sadas' />
 
-          </Grid>
+            </Grid>
 
-        </Container>
-        <Footer color="primary"/>
+          </Container>
+          <Footer color="primary" /> */}
       </MuiThemeProvider>
     </div>
   );

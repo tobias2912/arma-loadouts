@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "aaef3cd07e0514164818c7fe569e2ea0",
+    "revision": "d459ad3cafa543e871bb8e338cd470a1",
     "url": "/index.html"
   },
   {
-    "revision": "430edc20ab6111ba5dad",
+    "revision": "547ca33dd906a5885a4e",
     "url": "/static/css/2.316749da.chunk.css"
   },
   {
-    "revision": "f4f69b6357a1fd448e3f",
-    "url": "/static/css/main.249a52b3.chunk.css"
+    "revision": "0ce5570766c48ae646f2",
+    "url": "/static/css/main.6c11e079.chunk.css"
   },
   {
-    "revision": "430edc20ab6111ba5dad",
-    "url": "/static/js/2.c21b282d.chunk.js"
+    "revision": "547ca33dd906a5885a4e",
+    "url": "/static/js/2.c1941eb3.chunk.js"
   },
   {
-    "revision": "0749163b59fbee32225059cb60c18af6",
-    "url": "/static/js/2.c21b282d.chunk.js.LICENSE.txt"
+    "revision": "d35f5c293b49bc233f7511b7d3ac2b28",
+    "url": "/static/js/2.c1941eb3.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "f4f69b6357a1fd448e3f",
-    "url": "/static/js/main.3af16a59.chunk.js"
+    "revision": "0ce5570766c48ae646f2",
+    "url": "/static/js/main.ccf0d371.chunk.js"
   },
   {
     "revision": "7b96c9252b19eaecf32b",
@@ -90,9 +90,5 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "a8be5b46d06bb541b0968196ee5e6bb8",
     "url": "/static/media/roboto-vietnamese-400-normal.a8be5b46.woff2"
-  },
-  {
-    "revision": "cc8ed5a06744355cc9c01ba8e518c7a4",
-    "url": "/static/media/trikk.cc8ed5a0.jpg"
   }
 ]);
