@@ -3,6 +3,7 @@
 import { Card, CardContent, Typography } from '@material-ui/core';
 import React from 'react';
 export default function LoadoutCard({ loadout }) {
+    console.log("loadout");
     console.log(loadout);
     return (
         <Card>
@@ -14,7 +15,7 @@ export default function LoadoutCard({ loadout }) {
                     {loadout.name}
                 </Typography>
                 <Typography>
-                    {loadout.loadoutString}
+                    {loadout.loadout}
                 </Typography>
             </CardContent>
 

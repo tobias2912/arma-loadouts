@@ -3,6 +3,7 @@ import { AppBar, Button, Container, IconButton, Toolbar, Typography } from '@mat
 import React from 'react';
 import Header from '../components/header';
 import Loadoutlist from '../components/loadoutlist';
+import { getLoadouts } from '../service/realtimeAPI';
 const loadoutlist =
     [
         {
@@ -19,6 +20,7 @@ const loadoutlist =
     ]
 
 export default function Home() {
+    console.log(getLoadouts());
     return (
         <>
             <Header></Header>
