@@ -1,21 +1,36 @@
-import { TextField } from '@material-ui/core';
-import React from 'react';
+import { Button, FormHelperText, Grid, TextField } from '@material-ui/core';
+import React, { useContext } from 'react';
 import { useEffect } from 'react';
 import { postLoadout } from '../service/realtimeAPI';
+import { useStyles } from '../styles';
+import { UserContext } from '../UserProvider';
+import SendIcon from '@material-ui/icons/Send';
 export default function LoadoutForm() {
-
-    const handleSubmit =(e)=>{
+    const classes = useStyles();
+    const user = useContext(UserContext);
+    const handleSubmit = (e) => {
         e.preventDefault();
         const name = e.target.name.value;
         const loadout = e.target.loadout.value;
-        postLoadout(name,loadout)
+        const username = user.displayName;
+        postLoadout(name, loadout, username)
     }
     return (
-        /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
+        <Grid item>
         <form noValidate autoComplete="off" onSubmit={handleSubmit}>
-                        <input type="author" name="name" />
-                        <input type="string" name="loadout" />
-            <input type="submit" value="Submit" />
+            <TextField className={classes.formField} id="standard-basic" label="Loadout name" name="name" />
+            <TextField multiline className={classes.formField} id="standard-basic" label="arma 3 string" name="loadout" />
+            <FormHelperText id="component-helper-text">paste text from arma 3 arsenal</FormHelperText>
+            <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+          >
+              send
+              <SendIcon></SendIcon>
+          </Button>
         </form>
+
+        </Grid>
     );
 };
