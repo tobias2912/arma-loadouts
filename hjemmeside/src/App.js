@@ -1,11 +1,8 @@
 import React, { useContext } from 'react';
-import './App.css';
-import Sidebar from "./Sidebar";
 import Helmet from "react-helmet";
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { colors, Container, Grid } from '@material-ui/core';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import { Route, Switch } from 'react-router-dom';
 import Home from './pages/home';
 import Error from './pages/error';
 
