@@ -1,8 +1,7 @@
-
-
 import { AppBar, Button, IconButton, makeStyles, Toolbar, Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { UserContext } from '../UserProvider';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -18,6 +17,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header() {
     const classes = useStyles();
+    const user = useContext(UserContext);;
+    console.log(user);
     return (
         <AppBar position="static">
             <Toolbar>
@@ -25,7 +26,7 @@ export default function Header() {
                     {/* <MenuIcon /> */}
 
                     <Link to="/">
-                    show all
+                        show all
                     </Link>
                 </IconButton>
                 <Typography variant="h6" className={classes.title}>
@@ -33,7 +34,7 @@ export default function Header() {
                         Add new
                     </Link>
                 </Typography>
-                <Button color="inherit">Login</Button>
+                <Button color="inherit">{user.displayName}</Button>
             </Toolbar>
         </AppBar>
     )

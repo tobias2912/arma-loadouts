@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './App.css';
 import Sidebar from "./Sidebar";
 import Helmet from "react-helmet";
@@ -9,42 +9,38 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from './pages/home';
 import Error from './pages/error';
 
-import {theme} from './colors'
+import { theme } from './colors'
 import AddNew from './pages/addNew';
+import Signin from './pages/Signin';
+import Signup from './pages/Signup';
+import { UserContext } from './UserProvider';
 
 function App() {
+  const user = useContext(UserContext);;
+  console.log("loggedin"+(Boolean(user)));
   return (
-    <div className="App">
-      <MuiThemeProvider theme={theme}>
-        <CssBaseline />
-        <Helmet>
-          <title>Tobben</title>
-          <description>Tobbe sin side</description>
-          <meta
-            name="viewport"
-            content="minimum-scale=1, initial-scale=1, width=device-width"
-          />
-        </Helmet>
-        <main>
-          <Switch>
-            <Route path="/" component={Home} exact />
-            <Route path="/addLoadout" component={AddNew} exact />
-            <Route component={Error} />
-          </Switch>
-        </main>
-        {/* <Title />
-          <Sidebar />
-          <Container maxwidth="sm">
-            <Grid>
-              <Section filename='## overskrift Hjemmeside  <br> # this is stuff' />
-              <Section filename='### overskrift Hjemmeside  sadas' />
+    <MuiThemeProvider theme={theme}>
+      <CssBaseline />
+      <Helmet>
+        <title>Tobben</title>
+        <meta
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width"
+        />
+      </Helmet>
+      <main>
+        {user ? <Switch>
+          <Route path="/signup" component={Signup}></Route>
+          <Route path="/" component={Home} exact />
+          <Route path="/addLoadout" component={AddNew} exact />
+          <Route component={Error} />
+        </Switch>
+        :
+        <Signin></Signin>
+        }
 
-            </Grid>
-
-          </Container>
-          <Footer color="primary" /> */}
-      </MuiThemeProvider>
-    </div>
+      </main>
+    </MuiThemeProvider>
   );
 }
 

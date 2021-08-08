@@ -20,5 +20,14 @@ firebase serve
 ```
 deploy:
 ```
+npm run build
 firebase deploy
 ```
+
+# authentication
+
+Google auth
+
+https://blog.logrocket.com/user-authentication-firebase-react-apps/
+
+https://github.com/GoZaddy/Firebase-auth-article
