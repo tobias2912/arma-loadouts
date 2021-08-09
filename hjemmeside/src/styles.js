@@ -1,3 +1,4 @@
+import { findByLabelText } from "@testing-library/react";
 import { colors } from "./colors";
 
 const { makeStyles } = require("@material-ui/core");
@@ -9,30 +10,94 @@ export const useStyles = makeStyles((theme) => ({
             width: '25ch',
         },
     },
+    main: {
+        backgroundColor: colors.background.dark,
+    },
+
+    //add loadout
     loadoutstringbox: {
+        width:"100%",
         maxHeight: "4rem",
         overflowY: "scroll",
         overflowWrap: "break-word",
-        color: "#777777"
+        color: "#777777",
+        backgroundColor: colors.background.dark,
     },
-    loadoutCard: {
-        margin: "1rem",
-        backgroundColor: colors.background.medium,
+    icon:{
+        '&:hover':{
+            color:"orange",
+        },
+        margin:"1rem",
+        width:"2rem",
+    },
+    loadoutform: {
+        display: "flex",
+        flexDirection: "column",
     },
     formField: {
         width: "100%",
         margin: "1rem",
+        borderColor: "#ff0"
     },
+    optionsBox: {
+        display: "flex",
+        justifyContent: "space-around",
+        flexWrap: "wrap",
+
+    },
+    formControl: {
+        minWidth: "10rem",
+    },
+
     rootContainer: {
         padding: "2rem",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        backgroundColor: colors.background.dark
+        backgroundColor: colors.background.dark,
+        minHeight: "100rem",
+    },
+
+    //loadoutcards
+    loadoutCard: {
+        margin: "1rem",
+        backgroundColor: colors.background.medium,
+        width: "35rem"
+    },
+    accountContainer: {
+        width: "5rem",
+        // backgroundColor:colors.background.dark,
+        padding: "0rem",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        alignSelf: "flex-end",
+    },
+    img: {
+        // objectFit: "scale-down",
+        width: "10rem"
+    },
+    imageContainer: {
+        backgroundColor: colors.background.dark,
+        display:"flex",
+        alignItems:"center",
+        justifyContent:"center"
+    },
+    divider: {
+        color: colors.background.dark,
+        width: "100%",
+        height: "2px",
     },
     searchbar: {
         width: "80%",
-        margin: "0rem"
+        margin: "0rem",
+        display: "flex",
+    },
+    toolBar: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-around",
+
     },
     headerButton: {
         color: "#dddddd",

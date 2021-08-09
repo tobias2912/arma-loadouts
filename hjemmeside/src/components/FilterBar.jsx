@@ -10,7 +10,7 @@ export default function FilterBar({filterLoadouts}) {
     const user = useContext(UserContext);
     return (
         <AppBar className={classes.searchbar} position="static">
-            <Toolbar>
+            <Toolbar className={classes.toolBar}>
 
                 <Typography variant="h6" className={classes.title}>
                     filter

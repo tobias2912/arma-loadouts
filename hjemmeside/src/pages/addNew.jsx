@@ -34,7 +34,7 @@ export default function AddNew() {
     return (
         <>
             <Header></Header>
-            <Container className={classes.rootContainer} maxWidth="sm">
+            <Container className={classes.rootContainer} maxWidth="md">
                 <Grid container direction="column">
                     <LoadoutForm></LoadoutForm>
                 </Grid>

@@ -11,21 +11,23 @@ import AddNew from './pages/addNew';
 import Signin from './pages/Signin';
 import Signup from './pages/Signup';
 import { UserContext } from './UserProvider';
+import { useStyles } from './styles';
 
 function App() {
-  const user = useContext(UserContext);;
-  console.log("loggedin"+(Boolean(user)));
+  const user = useContext(UserContext);
+  // const user = {displayName:"tobias"};
+  const classes=useStyles();
   return (
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
       <Helmet>
-        <title>Tobben</title>
+        <title>Arma Loadouts</title>
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       </Helmet>
-      <main>
+      <main className={classes.main}>
         {user ? <Switch>
           <Route path="/signup" component={Signup}></Route>
           <Route path="/" component={Home} exact />
