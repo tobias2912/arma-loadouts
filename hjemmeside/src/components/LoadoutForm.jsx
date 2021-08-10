@@ -22,6 +22,8 @@ import SendIcon from "@material-ui/icons/Send";
 import { useHistory } from "react-router-dom";
 import Alert from "@material-ui/lab/Alert";
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import firebase from "firebase";
+import { storage } from "../firebase";
 
 export default function LoadoutForm() {
   const classes = useStyles();
@@ -30,7 +32,9 @@ export default function LoadoutForm() {
   const [classValue, setClassValue] = useState("Assault");
   const [openError, setOpen] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [imageAsFile, setImageAsFile] = useState(null)
+  const [imageAsUrl, setImageAsUrl] = useState('')
   /**
    * gather fields from form, validate and send to server
    */
@@ -56,7 +60,7 @@ export default function LoadoutForm() {
     if (e.target.ghillie.checked) {
       attributes.push("Ghillie suit");
     }
-    
+
 
     let loadout = {
       name: e.target.name.value,
@@ -68,11 +72,37 @@ export default function LoadoutForm() {
     if (!isValidInput(loadout)) {
       //error
     } else {
+      postImage(loadout.name);
       postLoadout(loadout).then(() => {
         history.push("/");
       });
     }
   };
+
+  const postImage = (imageName) =>{
+    console.log('start of upload')
+    // async magic goes here...
+    if(imageAsFile === '') {
+      console.error(`not an image, the image file is a ${typeof(imageAsFile)}`)
+    }
+    const uploadTask = storage.ref(`/images/${imageName}`).put(imageAsFile)
+    //initiates the firebase side uploading 
+    uploadTask.on('state_changed', 
+    (snapShot) => {
+      //takes a snap shot of the process as it is happening
+      console.log(snapShot)
+    }, (err) => {
+      //catches the errors
+      console.log(err)
+    }, () => {
+      // gets the functions from storage refences the image storage in firebase by the children
+      // gets the download url then sets the image from firebase as the value for the imgUrl key:
+      storage.ref('images').child(imageName).getDownloadURL()
+       .then(fireBaseUrl => {
+         setImageAsUrl(prevObject => ({...prevObject, imgUrl: fireBaseUrl}))
+       })
+    })
+  }
 
   const isValidInput = (loadout) => {
     if (loadout.items.length < 20) {
@@ -89,8 +119,16 @@ export default function LoadoutForm() {
     return true;
   };
 
-  const handleClassChange = () => {};
+  const handleClassChange = () => { };
 
+  const onFileChange = event => { 
+    // Update the state 
+    setSelectedFile(event.target.files[0]); 
+  };
+  const handleImageAsFile = (e) => {
+    const image = e.target.files[0]
+    setImageAsFile(imageFile => (image))
+}
   return (
     <Grid xs={12} item>
       <Snackbar
@@ -135,7 +173,7 @@ export default function LoadoutForm() {
             <FormLabel component="legend">Role:</FormLabel>
             <RadioGroup
               name="role"
-            //   value={classValue}
+              //   value={classValue}
               onChange={handleClassChange}
             >
               <FormControlLabel
@@ -177,7 +215,7 @@ export default function LoadoutForm() {
             <RadioGroup
               aria-label="gender"
               name="role"
-            //   value={classValue}
+              //   value={classValue}
               onChange={handleClassChange}
             >
               <FormControlLabel
@@ -248,6 +286,7 @@ export default function LoadoutForm() {
             </FormGroup>
           </FormControl>
         </Box>
+        <input type="file" onChange={handleImageAsFile} />
         <Button type="submit" variant="contained" color="primary">
           send
           <SendIcon></SendIcon>
