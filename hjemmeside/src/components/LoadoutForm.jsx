@@ -41,6 +41,22 @@ export default function LoadoutForm() {
     if (e.target.nighttime.checked) {
       attributes.push("Night time");
     }
+    if (e.target.grenadier.checked) {
+      attributes.push("Grenadier");
+    }
+    if (e.target.medic.checked) {
+      attributes.push("medic");
+    }
+    if (e.target.frogman.checked) {
+      attributes.push("frogman");
+    }
+    if (e.target.jtac.checked) {
+      attributes.push("JTAC/ Drone");
+    }
+    if (e.target.ghillie.checked) {
+      attributes.push("Ghillie suit");
+    }
+    
 
     let loadout = {
       name: e.target.name.value,
@@ -210,19 +226,19 @@ export default function LoadoutForm() {
                 label="night time"
               />
               <FormControlLabel
-                control={<Checkbox name="Grenadier" />}
+                control={<Checkbox name="grenadier" />}
                 label="Grenadier"
               />
               <FormControlLabel
-                control={<Checkbox name="Medic" />}
+                control={<Checkbox name="medic" />}
                 label="Medic"
               />
               <FormControlLabel
-                control={<Checkbox name="Frogman" />}
+                control={<Checkbox name="frogman" />}
                 label="Frogman"
               />
               <FormControlLabel
-                control={<Checkbox name="JTAC" />}
+                control={<Checkbox name="jtac" />}
                 label="JTAC/ Drone Operator"
               />
 
