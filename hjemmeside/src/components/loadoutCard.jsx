@@ -16,6 +16,8 @@ import MuiAlert from "@material-ui/lab/Alert";
 import { useStyles } from "../styles";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import tempImage from "../icons/loadout.png";
+import { getLoadoutImg } from "../service/realtimeAPI";
+import { useEffect } from "react";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -24,6 +26,15 @@ function Alert(props) {
 export default function LoadoutCard({ loadout }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const [image, setImage] = useState(null);
+
+  useEffect(()=>{
+    getLoadoutImg(loadout.name).then((res)=>{
+      setImage(res);
+    }).catch((err)=>{
+      
+    })
+  },[])
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -53,7 +64,8 @@ export default function LoadoutCard({ loadout }) {
             </Box>
           </Grid>
           <Grid item xs={6} className={classes.imageContainer}>
-            <img src={tempImage} className={classes.img}></img>
+            {image? <img src={image} className={classes.img}></img>: <p>loading</p>}
+            
           </Grid>
           <Grid item xs={6} >
             <Box

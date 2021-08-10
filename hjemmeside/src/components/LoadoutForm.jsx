@@ -15,7 +15,7 @@ import {
 } from "@material-ui/core";
 import React, { useContext, useState } from "react";
 import { useEffect } from "react";
-import { postLoadout } from "../service/realtimeAPI";
+import { postImage, postLoadout } from "../service/realtimeAPI";
 import { useStyles } from "../styles";
 import { UserContext } from "../UserProvider";
 import SendIcon from "@material-ui/icons/Send";
@@ -72,37 +72,13 @@ export default function LoadoutForm() {
     if (!isValidInput(loadout)) {
       //error
     } else {
-      postImage(loadout.name);
+      postImage(loadout.name, imageAsFile)
       postLoadout(loadout).then(() => {
         history.push("/");
       });
     }
   };
 
-  const postImage = (imageName) =>{
-    console.log('start of upload')
-    // async magic goes here...
-    if(imageAsFile === '') {
-      console.error(`not an image, the image file is a ${typeof(imageAsFile)}`)
-    }
-    const uploadTask = storage.ref(`/images/${imageName}`).put(imageAsFile)
-    //initiates the firebase side uploading 
-    uploadTask.on('state_changed', 
-    (snapShot) => {
-      //takes a snap shot of the process as it is happening
-      console.log(snapShot)
-    }, (err) => {
-      //catches the errors
-      console.log(err)
-    }, () => {
-      // gets the functions from storage refences the image storage in firebase by the children
-      // gets the download url then sets the image from firebase as the value for the imgUrl key:
-      storage.ref('images').child(imageName).getDownloadURL()
-       .then(fireBaseUrl => {
-         setImageAsUrl(prevObject => ({...prevObject, imgUrl: fireBaseUrl}))
-       })
-    })
-  }
 
   const isValidInput = (loadout) => {
     if (loadout.items.length < 20) {
