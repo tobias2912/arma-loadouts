@@ -42,7 +42,7 @@ export default function LoadoutCard({ loadout }) {
     <Card className={classes.loadoutCard}>
       <CardContent>
         <Grid container direction="row" alignItems="stretch">
-          <Grid item xs={12} spacing={2}>
+          <Grid item xs={12} >
             <Box display="flex" justifyContent="center" alignItems="center">
               <Typography align="center" variant="h4">
                 {loadout.name}
@@ -52,10 +52,10 @@ export default function LoadoutCard({ loadout }) {
               </Tooltip>
             </Box>
           </Grid>
-          <Grid item xs={6} spacing={1} className={classes.imageContainer}>
+          <Grid item xs={6} className={classes.imageContainer}>
             <img src={tempImage} className={classes.img}></img>
           </Grid>
-          <Grid item xs={6} spacing={1}>
+          <Grid item xs={6} >
             <Box
               height="100%"
               display="flex"
@@ -70,6 +70,7 @@ export default function LoadoutCard({ loadout }) {
                 {loadout.attributes?.length > 0 &&
                   loadout.attributes.map((item, _i) => (
                     <Chip
+                      key={_i}
                       color="secondary"
                       size="small"
                       variant="outlined"
@@ -84,7 +85,7 @@ export default function LoadoutCard({ loadout }) {
               </Box>
               <Box className={classes.loadoutstringbox}>
                 <Typography variant="caption" color="textSecondary">
-                  {loadout.loadout}
+                  {loadout.items}
                 </Typography>
               </Box>
             </Box>

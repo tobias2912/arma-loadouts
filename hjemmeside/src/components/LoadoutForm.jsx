@@ -61,11 +61,10 @@ export default function LoadoutForm() {
     let loadout = {
       name: e.target.name.value,
       items: e.target.items.value,
-      username: user.displayName,
+      author: user.displayName,
       role: e.target.role.value,
       attributes: attributes,
     };
-    console.log("1");
     if (!isValidInput(loadout)) {
       //error
     } else {

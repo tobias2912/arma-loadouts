@@ -1,6 +1,8 @@
 import firebase from "firebase";
 
 export const postLoadout = (loadout) => {
+
+    console.log("posting loadout:", loadout);
     var postListRef = firebase.database().ref('loadouts');
     var newPostRef = postListRef.push();
     return newPostRef.set(loadout);

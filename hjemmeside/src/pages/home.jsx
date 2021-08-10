@@ -22,7 +22,7 @@ export default function Home() {
 
   const getLoadouts = () => {
     if (process.env.REACT_APP_RUN_OFFLINE == "TRUE") {
-        console.log("true");
+        console.log("running offline");
         setLoadouts(mockedLoadouts);
         setFilteredLoadouts(mockedLoadouts);
         return;

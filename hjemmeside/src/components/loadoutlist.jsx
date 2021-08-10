@@ -8,7 +8,7 @@ export default function Loadoutlist({ loadouts }) {
       direction="row"
     >
       {Object.keys(loadouts).map((item, _i) => (
-        <LoadoutCard loadout={loadouts[item]}></LoadoutCard>
+        <LoadoutCard key={_i} loadout={loadouts[item]}></LoadoutCard>
       ))}
     </Grid>
   );
