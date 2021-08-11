@@ -15,6 +15,11 @@ export const useStyles = makeStyles((theme) => ({
     },
 
     //add loadout
+    button:{
+        margin:"1rem",
+        maxWidth:"15rem",
+        alingSelf:"center",
+    },
     loadoutstringbox: {
         width:"100%",
         maxHeight: "4rem",
@@ -33,6 +38,7 @@ export const useStyles = makeStyles((theme) => ({
     loadoutform: {
         display: "flex",
         flexDirection: "column",
+        alignItems:"center",
     },
     formField: {
         width: "100%",
@@ -40,6 +46,7 @@ export const useStyles = makeStyles((theme) => ({
         borderColor: "#ff0"
     },
     optionsBox: {
+        width:"100%",
         display: "flex",
         justifyContent: "space-around",
         flexWrap: "wrap",

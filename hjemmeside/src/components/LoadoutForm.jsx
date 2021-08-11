@@ -14,16 +14,12 @@ import {
   TextField,
 } from "@material-ui/core";
 import React, { useContext, useState } from "react";
-import { useEffect } from "react";
 import { postImage, postLoadout } from "../service/realtimeAPI";
 import { useStyles } from "../styles";
 import { UserContext } from "../UserProvider";
 import SendIcon from "@material-ui/icons/Send";
 import { useHistory } from "react-router-dom";
 import Alert from "@material-ui/lab/Alert";
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
-import firebase from "firebase";
-import { storage } from "../firebase";
 
 export default function LoadoutForm() {
   const classes = useStyles();
@@ -97,14 +93,14 @@ export default function LoadoutForm() {
 
   const handleClassChange = () => { };
 
-  const onFileChange = event => { 
+  const onFileChange = event => {
     // Update the state 
-    setSelectedFile(event.target.files[0]); 
+    setSelectedFile(event.target.files[0]);
   };
   const handleImageAsFile = (e) => {
     const image = e.target.files[0]
     setImageAsFile(imageFile => (image))
-}
+  }
   return (
     <Grid xs={12} item>
       <Snackbar
@@ -262,12 +258,20 @@ export default function LoadoutForm() {
             </FormGroup>
           </FormControl>
         </Box>
-        <input type="file" onChange={handleImageAsFile} />
-        <Button type="submit" variant="contained" color="primary">
+        <Button
+          variant="contained"
+          component="label"
+          className={classes.button}
+        >
+          Click to upload Image
+          <input type="file" hidden onChange={handleImageAsFile} />
+        </Button>
+
+        <Button className={classes.button} type="submit" variant="contained" color="primary">
           send
           <SendIcon></SendIcon>
         </Button>
       </form>
-    </Grid>
+    </Grid >
   );
 }

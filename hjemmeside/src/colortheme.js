@@ -1,19 +1,19 @@
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { colors } from './colors';
 export const theme = createMuiTheme({
   palette: {
     type: "dark",
     primary: {
-      main: '#014009',
+      main: colors.green,
       contrastText:"#ddd",
     },
     secondary: {
-      main: '#906400'
+      main: colors.orange,
     },
     text:{
       primary:"#ffffff",
       secondary:"#cccccc",
     }
-
   },
 
 });
