@@ -4,7 +4,7 @@ import { storage } from "../firebase";
 export const postLoadout = (loadout) => {
     loadout.uid = firebase.auth().currentUser.uid;
     console.log("posting loadout:", loadout);
-    var postListRef = firebase.database().ref('loadouts');
+    var postListRef = firebase.database().ref('loadouts/'+firebase.auth().currentUser.uid);
     var newPostRef = postListRef.push();
     return newPostRef.set(loadout);
 }
