@@ -3,7 +3,6 @@ import {
   Card,
   CardContent,
   Chip,
-  Container,
   Divider,
   Grid,
   Snackbar,
@@ -15,7 +14,6 @@ import FileCopyIcon from "@material-ui/icons/FileCopy";
 import MuiAlert from "@material-ui/lab/Alert";
 import { useStyles } from "../styles";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
-import tempImage from "../icons/loadout.png";
 import { getLoadoutImg } from "../service/realtimeAPI";
 import { useEffect } from "react";
 
@@ -63,11 +61,11 @@ export default function LoadoutCard({ loadout }) {
               </Tooltip>
             </Box>
           </Grid>
-          <Grid item xs={6} className={classes.imageContainer}>
+          <Grid item xs={4} className={classes.imageContainer}>
             {image? <img src={image} className={classes.img}></img>: <p>loading</p>}
             
           </Grid>
-          <Grid item xs={6} >
+          <Grid item xs={8} >
             <Box
               height="100%"
               display="flex"
@@ -93,7 +91,7 @@ export default function LoadoutCard({ loadout }) {
               <Divider className={classes.divider}></Divider>
               <Box className={classes.accountContainer}>
                 <AccountBoxIcon />
-                <Typography variant="h6">{loadout.author}</Typography>
+                <Typography variant="h7">{loadout.author}</Typography>
               </Box>
               <Box className={classes.loadoutstringbox}>
                 <Typography variant="caption" color="textSecondary">

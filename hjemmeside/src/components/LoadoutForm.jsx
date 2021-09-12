@@ -36,7 +36,7 @@ export default function LoadoutForm() {
   const [upImg, setUpImg] = useState();
   const imgRef = useRef(null);
   const previewCanvasRef = useRef(null);
-  const [crop, setCrop] = useState({ unit: '%', width: 30, aspect: 16 / 9 });
+  const [crop, setCrop] = useState({ unit: '%', width: 30, aspect: 3 / 4 });
   const [completedCrop, setCompletedCrop] = useState(null);
   const [croppedFile, setCroppedFile] = useState(null);
   /**
@@ -386,8 +386,8 @@ export default function LoadoutForm() {
           ref={previewCanvasRef}
           // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
           style={{
-            width: Math.round(completedCrop?.width ?? 0),
-            height: Math.round(completedCrop?.height ?? 0)
+            width: Math.round(completedCrop?.width ?? 0)/2,
+            height: Math.round(completedCrop?.height ?? 0)/2
           }}
         />
         <Button className={classes.button} type="submit" variant="contained" color="primary">

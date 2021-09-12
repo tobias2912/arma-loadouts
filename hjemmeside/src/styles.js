@@ -30,7 +30,7 @@ export const useStyles = makeStyles((theme) => ({
     },
     icon:{
         '&:hover':{
-            color:"orange",
+            color:colors.orange,
         },
         margin:"1rem",
         width:"2rem",
@@ -62,7 +62,7 @@ export const useStyles = makeStyles((theme) => ({
         flexDirection: "column",
         alignItems: "center",
         backgroundColor: colors.background.dark,
-        minHeight: "100rem",
+        minHeight: "80rem",
     },
 
     //loadoutcards
@@ -79,6 +79,9 @@ export const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         justifyContent: "center",
         alignSelf: "flex-end",
+    },
+    attributeChip:{
+        margin:"0.1rem",
     },
     img: {
         // objectFit: "scale-down",
