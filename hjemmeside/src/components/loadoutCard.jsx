@@ -80,6 +80,7 @@ export default function LoadoutCard({ loadout }) {
                 {loadout.attributes?.length > 0 &&
                   loadout.attributes.map((item, _i) => (
                     <Chip
+                    className={classes.attributeChip}
                       key={_i}
                       color="secondary"
                       size="small"
