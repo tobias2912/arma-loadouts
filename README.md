@@ -2,7 +2,8 @@
 
 hosted on Firebase, built with react
 
-live on https://tobiaseilertsen.no/
+![score](https://www.code-inspector.com/project/29388/status/svg)
+
 
 # how to run
 
