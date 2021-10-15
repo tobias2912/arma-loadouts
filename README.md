@@ -1,4 +1,6 @@
-﻿# hjemmeside
+﻿# arma loadouts
+ 
+ built to share arma loadouts exported from in-game.
 
 hosted on Firebase, built with react
 
