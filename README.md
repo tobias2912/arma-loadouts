@@ -2,7 +2,9 @@
  
  built to share arma loadouts exported from in-game.
 
-hosted on Firebase, built with react
+hosted with Firebase, built with react.
+
+uses firebase database and firebase authentication.
 
 ![score](https://www.code-inspector.com/project/29388/status/svg)
 
