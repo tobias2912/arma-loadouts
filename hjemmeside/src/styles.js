@@ -108,12 +108,11 @@ export const useStyles = makeStyles((theme) => ({
         justifyContent: "space-around",
 
     },
-    headerButton: {
-        color: "#dddddd",
+    headerButtonLink: {
         "&:visited": {
-            color: "#dddddd"
+            color: "#ffffff",
+            textDecoration: "none",
         },
-
     }
 
 }));

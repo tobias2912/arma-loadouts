@@ -1,4 +1,4 @@
-import { AppBar, Button, IconButton, makeStyles, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Button, IconButton, Toolbar } from '@material-ui/core';
 import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useStyles } from '../styles';
@@ -12,13 +12,13 @@ export default function Header() {
     return (
         <AppBar position="static">
             <Toolbar>
-                <IconButton edge="start" className={classes.title} color="inherit" aria-label="menu">
-                    <NavLink to="/" style={{ textDecoration: 'none' }}>
+                <Button >
+                    <NavLink className={classes.headerButtonLink} to="/" style={{ textDecoration: 'none' }}>
                         show all
                     </NavLink>
-                </IconButton>
-                <Button className={classes.headerButton}>
-                    <Link to="/addLoadout" style={{ textDecoration: 'none' }}>
+                </Button>
+                <Button >
+                    <Link className={classes.headerButtonLink} to="/addLoadout" style={{ textDecoration: 'none' }}>
                         Add new
                     </Link>
                 </Button>

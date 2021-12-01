@@ -26,13 +26,13 @@ export default function LoadoutCard({ loadout }) {
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState(null);
 
-  useEffect(()=>{
-    getLoadoutImg(loadout.name).then((res)=>{
+  useEffect(() => {
+    getLoadoutImg(loadout.name).then((res) => {
       setImage(res);
-    }).catch((err)=>{
-      
+    }).catch((err) => {
+
     })
-  },[])
+  }, [])
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -53,7 +53,7 @@ export default function LoadoutCard({ loadout }) {
         <Grid container direction="row" alignItems="stretch">
           <Grid item xs={12} >
             <Box display="flex" justifyContent="center" alignItems="center">
-              <Typography align="center" variant="h4" style={{fontFamily:"Allerta Stencil"}} className={classes.loadoutname}>
+              <Typography align="center" variant="h4" style={{ fontFamily: "Allerta Stencil" }} >
                 {loadout.name}
               </Typography>
               <Tooltip title="copy">
@@ -62,8 +62,8 @@ export default function LoadoutCard({ loadout }) {
             </Box>
           </Grid>
           <Grid item xs={4} className={classes.imageContainer}>
-            {image? <img src={image} className={classes.img}></img>: <p>loading</p>}
-            
+            {image ? <img src={image} className={classes.img}></img> : <p>loading</p>}
+
           </Grid>
           <Grid item xs={8} >
             <Box
@@ -80,7 +80,7 @@ export default function LoadoutCard({ loadout }) {
                 {loadout.attributes?.length > 0 &&
                   loadout.attributes.map((item, _i) => (
                     <Chip
-                    className={classes.attributeChip}
+                      className={classes.attributeChip}
                       key={_i}
                       color="secondary"
                       size="small"
