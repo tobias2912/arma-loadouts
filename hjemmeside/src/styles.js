@@ -2,7 +2,6 @@ import { findByLabelText } from "@testing-library/react";
 import { colors } from "./colors";
 
 const { makeStyles } = require("@material-ui/core");
-
 export const useStyles = makeStyles((theme) => ({
     root: {
         '& > *': {
@@ -15,30 +14,30 @@ export const useStyles = makeStyles((theme) => ({
     },
 
     //add loadout
-    button:{
-        margin:"1rem",
-        maxWidth:"15rem",
-        alingSelf:"center",
+    button: {
+        margin: "1rem",
+        maxWidth: "15rem",
+        alingSelf: "center",
     },
     loadoutstringbox: {
-        width:"100%",
+        width: "100%",
         maxHeight: "4rem",
         overflowY: "scroll",
         overflowWrap: "break-word",
         color: "#777777",
         backgroundColor: colors.background.dark,
     },
-    icon:{
-        '&:hover':{
-            color:colors.orange,
+    icon: {
+        '&:hover': {
+            color: colors.orange,
         },
-        margin:"1rem",
-        width:"2rem",
+        margin: "1rem",
+        width: "2rem",
     },
     loadoutform: {
         display: "flex",
         flexDirection: "column",
-        alignItems:"center",
+        alignItems: "center",
     },
     formField: {
         width: "100%",
@@ -46,7 +45,7 @@ export const useStyles = makeStyles((theme) => ({
         borderColor: "#ff0"
     },
     optionsBox: {
-        width:"100%",
+        width: "100%",
         display: "flex",
         justifyContent: "space-around",
         flexWrap: "wrap",
@@ -80,8 +79,8 @@ export const useStyles = makeStyles((theme) => ({
         justifyContent: "center",
         alignSelf: "flex-end",
     },
-    attributeChip:{
-        margin:"0.1rem",
+    attributeChip: {
+        margin: "0.1rem",
     },
     img: {
         // objectFit: "scale-down",
@@ -89,9 +88,9 @@ export const useStyles = makeStyles((theme) => ({
     },
     imageContainer: {
         backgroundColor: colors.background.dark,
-        display:"flex",
-        alignItems:"center",
-        justifyContent:"center"
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
     },
     divider: {
         color: colors.background.dark,

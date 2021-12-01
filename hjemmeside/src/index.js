@@ -5,6 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import "firebase/auth";
 import UserProvider from './UserProvider';
+import './index.css';
 
 
 ReactDOM.render(

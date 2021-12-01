@@ -53,7 +53,7 @@ export default function LoadoutCard({ loadout }) {
         <Grid container direction="row" alignItems="stretch">
           <Grid item xs={12} >
             <Box display="flex" justifyContent="center" alignItems="center">
-              <Typography align="center" variant="h4">
+              <Typography align="center" variant="h4" style={{fontFamily:"Allerta Stencil"}} className={classes.loadoutname}>
                 {loadout.name}
               </Typography>
               <Tooltip title="copy">
