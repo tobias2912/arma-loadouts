@@ -11,14 +11,11 @@ export default function FilterBar({filterLoadouts}) {
         <AppBar className={classes.searchbar} position="static">
             <Toolbar className={classes.toolBar}>
 
-                <Typography variant="h6" className={classes.title}>
-                    filter
-                </Typography>
                 <TextField
                     onChange={filterLoadouts}
                     id="standard-textarea"
-                    label="search"
-                    placeholder="Placeholder"
+                    label="Search"
+                    placeholder="Search"
                 />
             </Toolbar>
         </AppBar>

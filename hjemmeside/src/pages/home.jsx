@@ -1,18 +1,12 @@
 import {
-  AppBar,
-  Button,
   CircularProgress,
   Container,
-  IconButton,
-  Toolbar,
-  Typography,
 } from "@material-ui/core";
 import firebase from "firebase";
 import React, { useEffect, useState } from "react";
-import FilterBar from "../components/FilterBar";
 import Header from "../components/header";
 import Loadoutlist from "../components/loadoutlist";
-import { getLoadouts, mockedLoadouts } from "../service/realtimeAPI";
+import { mockedLoadouts } from "../service/realtimeAPI";
 import { useStyles } from "../styles";
 
 export default function Home() {
@@ -21,7 +15,7 @@ export default function Home() {
   const [filteredLoadouts, setFilteredLoadouts] = useState([]);
 
   const getLoadouts = () => {
-    if (process.env.REACT_APP_RUN_OFFLINE == "TRUE") {
+    if (process.env.REACT_APP_RUN_OFFLINE === "TRUE") {
         console.log("running offline");
         setLoadouts(mockedLoadouts);
         setFilteredLoadouts(mockedLoadouts);
@@ -52,20 +46,24 @@ export default function Home() {
   const filterLoadouts = (searchevent) => {
     const searchterm = searchevent.target.value;
     let filteredAcc = {};
-    Object.keys(loadouts).map((item, _i) => {
-      let loadout = loadouts[item];
-      if (loadout.name.includes(searchterm)) {
-        filteredAcc[item] = loadout;
+    console.log(loadouts);
+    for(var userid in loadouts){
+      let userloadouts = loadouts[userid];
+      filteredAcc[userid] = {};
+      for(var loadoutid in userloadouts){
+        let loadout = userloadouts[loadoutid];
+        console.log(userid);
+        console.log(loadout.name);
+        filteredAcc[userid][loadoutid]= loadout;
       }
-    });
+    }
     setFilteredLoadouts(filteredAcc);
   };
 
   return (
     <>
-      <Header></Header>
+      <Header filterLoadouts={filterLoadouts}></Header>
       <Container className={classes.rootContainer}>
-        <FilterBar filterLoadouts={filterLoadouts}></FilterBar>
         {loadouts.length === 0 ? (
           <>
             <CircularProgress />

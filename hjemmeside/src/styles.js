@@ -1,4 +1,3 @@
-import { findByLabelText } from "@testing-library/react";
 import { colors } from "./colors";
 
 const { makeStyles } = require("@material-ui/core");
@@ -98,7 +97,7 @@ export const useStyles = makeStyles((theme) => ({
         height: "2px",
     },
     searchbar: {
-        width: "80%",
+        width: "40%",
         margin: "0rem",
         display: "flex",
     },
@@ -113,6 +112,10 @@ export const useStyles = makeStyles((theme) => ({
             color: "#ffffff",
             textDecoration: "none",
         },
+    },
+    headerbar:{
+        alignItems:"space-between",
+        justifyContent:"space-between",
     }
 
 }));
