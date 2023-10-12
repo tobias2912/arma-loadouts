@@ -26,8 +26,8 @@ export const useStyles = makeStyles((theme) => ({
         color: "#777777",
         backgroundColor: colors.background.dark,
     },
-    uploadedImage:{
-        maxHeight:"500px"
+    uploadedImage: {
+        maxHeight: "500px"
     },
     icon: {
         '&:hover': {
@@ -99,12 +99,7 @@ export const useStyles = makeStyles((theme) => ({
         width: "100%",
         height: "2px",
     },
-    searchbar: {
-        width: "40%",
-        margin: "0rem",
-        display: "flex",
-    },
-    toolBar: {
+    searchtoolBar: {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-around",
@@ -116,9 +111,8 @@ export const useStyles = makeStyles((theme) => ({
             textDecoration: "none",
         },
     },
-    headerbar:{
-        alignItems:"space-between",
-        justifyContent:"space-between",
-    }
-
+    headerbar: {
+        alignItems: "space-between",
+        justifyContent: "space-between",
+    },
 }));

@@ -4,7 +4,7 @@ import { storage } from "../firebase";
 export const postLoadout = (loadout) => {
     loadout.uid = firebase.auth().currentUser.uid;
     console.log("posting loadout:", loadout);
-    var postListRef = firebase.database().ref('loadouts/'+firebase.auth().currentUser.uid);
+    var postListRef = firebase.database().ref('loadouts/' + firebase.auth().currentUser.uid);
     var newPostRef = postListRef.push();
     return newPostRef.set(loadout);
 }
@@ -23,37 +23,32 @@ export const getLoadouts = () => {
     });
 }
 
-export const getLoadoutImg = async (title) =>{
+export const getLoadoutImg = async (title) => {
     let result = await storage.ref(`/loadouts/${title}`).getDownloadURL();
     return result;
 }
 
 
-  export const  postImage = async (imageName, imageAsFile) =>{
+export const postImage = async (imageName, imageAsFile, history) => {
     console.log('start of upload')
     // async magic goes here...
-    if(imageAsFile === '') {
-      console.error(`not an image, the image file is a ${typeof(imageAsFile)}`)
+    if (imageAsFile === '') {
+        console.error(`not an image, the image file is a ${typeof (imageAsFile)}`)
     }
     const uploadTask = storage.ref(`/loadouts/${imageName}`).put(imageAsFile)
     //initiates the firebase side uploading 
-    uploadTask.on('state_changed', 
-    (snapShot) => {
-      //takes a snap shot of the process as it is happening
-      console.log(snapShot)
-    }, (err) => {
-      //catches the errors
-      console.log(err)
-    }, () => {
-      // gets the functions from storage refences the image storage in firebase by the children
-      // gets the download url then sets the image from firebase as the value for the imgUrl key:
-      storage.ref('images').child(imageName).getDownloadURL()
-       .then(fireBaseUrl => {
-           console.log(fireBaseUrl);
-        //  setImageAsUrl(prevObject => ({...prevObject, imgUrl: fireBaseUrl}))
-       })
-    })
-  }
+    uploadTask.on('state_changed',
+        (snapShot) => {
+            //takes a snap shot of the process as it is happening
+            console.log(snapShot)
+        }, (err) => {
+            //catches the errors
+            console.log(err)
+        }, () => {
+            //completed
+            history.push("/");
+        })
+}
 
 export const mockedLoadouts = {
     "id1": {

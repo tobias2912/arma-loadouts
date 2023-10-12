@@ -33,7 +33,6 @@ export default function LoadoutForm() {
   const classes = useStyles();
   const user = useContext(UserContext);
   const history = useHistory();
-  const [classValue, setClassValue] = useState("Assault");
   const [openError, setOpen] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -51,7 +50,7 @@ export default function LoadoutForm() {
   /**
    * gather fields from form, validate and send to server
    */
-  const handleSubmit = (/** @type {{ preventDefault: () => void; target: { nighttime: { checked: any; }; grenadier: { checked: any; }; medic: { checked: any; }; frogman: { checked: any; }; jtac: { checked: any; }; ghillie: { checked: any; }; camo: any; name: { value: any; }; items: { value: any; }; role: { value: any; }; }; }} */ e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     let attributes = [];
@@ -73,7 +72,7 @@ export default function LoadoutForm() {
     if (e.target.ghillie.checked) {
       attributes.push("Ghillie suit");
     }
-    attributes.push(e.target.camo.value)
+    attributes.push(e.target.camo.value);
     let loadout = {
       name: e.target.name.value,
       items: e.target.items.value,
@@ -84,11 +83,8 @@ export default function LoadoutForm() {
     if (!ValidateInput(loadout)) {
       //error
     } else {
+      postLoadout(loadout);
       postCroppedImage(loadout.name);
-      console.log("original:", upImg);
-      postLoadout(loadout).then(() => {
-        history.push("/");
-      });
     }
   };
 
@@ -97,12 +93,12 @@ export default function LoadoutForm() {
     console.log(canvas);
     canvas.toBlob(function (blob) {
       console.log(blob);
-      postImage(name, blob);
+      postImage(name, blob, history);
     });
   };
 
   const ValidateInput = (loadout) => {
-    if (loadout.items.length < 20) {
+    if (loadout.items.length < 20 && false) {
       //probably not valid
       setErrorMsg("Exported loadout does not seem to be correct");
       setOpen(true);
@@ -122,7 +118,6 @@ export default function LoadoutForm() {
   }, []);
 
   const [imageIsLoaded, setImageIsLoaded] = useState(false);
-
 
   useEffect(() => {
     if (!completedCrop || !previewCanvasRef.current || !imgRef.current) {
@@ -156,7 +151,6 @@ export default function LoadoutForm() {
       crop.height
     );
   }, [completedCrop]);
-
 
   const onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
