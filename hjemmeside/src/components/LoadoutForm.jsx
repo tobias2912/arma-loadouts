@@ -13,8 +13,14 @@ import {
   Snackbar,
   TextField,
 } from "@material-ui/core";
-import ReactCrop from 'react-image-crop';
-import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
+import ReactCrop from "react-image-crop";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { postImage, postLoadout } from "../service/realtimeAPI";
 import { useStyles } from "../styles";
 import { UserContext } from "../UserProvider";
@@ -32,17 +38,20 @@ export default function LoadoutForm() {
   const [errorMsg, setErrorMsg] = useState("");
 
   //crop states
-
+  const aspectRatio = 3 / 4;
   const [upImg, setUpImg] = useState();
   const imgRef = useRef(null);
   const previewCanvasRef = useRef(null);
-  const [crop, setCrop] = useState({ unit: '%', width: 30, aspect: 3 / 4 });
+  const [crop, setCrop] = useState({
+    unit: "%",
+    width: 30,
+    aspect: aspectRatio,
+  });
   const [completedCrop, setCompletedCrop] = useState(null);
-  const [croppedFile, setCroppedFile] = useState(null);
   /**
    * gather fields from form, validate and send to server
    */
-  const handleSubmit = (e) => {
+  const handleSubmit = (/** @type {{ preventDefault: () => void; target: { nighttime: { checked: any; }; grenadier: { checked: any; }; medic: { checked: any; }; frogman: { checked: any; }; jtac: { checked: any; }; ghillie: { checked: any; }; camo: any; name: { value: any; }; items: { value: any; }; role: { value: any; }; }; }} */ e) => {
     e.preventDefault();
 
     let attributes = [];
@@ -64,6 +73,7 @@ export default function LoadoutForm() {
     if (e.target.ghillie.checked) {
       attributes.push("Ghillie suit");
     }
+    attributes.push(e.target.camo.value)
     let loadout = {
       name: e.target.name.value,
       items: e.target.items.value,
@@ -71,7 +81,7 @@ export default function LoadoutForm() {
       role: e.target.role.value,
       attributes: attributes,
     };
-    if (!isValidInput(loadout)) {
+    if (!ValidateInput(loadout)) {
       //error
     } else {
       postCroppedImage(loadout.name);
@@ -87,12 +97,11 @@ export default function LoadoutForm() {
     console.log(canvas);
     canvas.toBlob(function (blob) {
       console.log(blob);
-      postImage((name), blob)
-    });;
+      postImage(name, blob);
+    });
+  };
 
-  }
-
-  const isValidInput = (loadout) => {
+  const ValidateInput = (loadout) => {
     if (loadout.items.length < 20) {
       //probably not valid
       setErrorMsg("Exported loadout does not seem to be correct");
@@ -109,28 +118,11 @@ export default function LoadoutForm() {
 
   const onLoad = useCallback((img) => {
     imgRef.current = img;
+    setImageIsLoaded(true);
   }, []);
 
-  function generateDownload(canvas, crop) {
-    if (!crop || !canvas) {
-      return;
-    }
+  const [imageIsLoaded, setImageIsLoaded] = useState(false);
 
-    canvas.toBlob(
-      (blob) => {
-        const previewUrl = window.URL.createObjectURL(blob);
-
-        const anchor = document.createElement('a');
-        anchor.download = 'cropPreview.png';
-        anchor.href = URL.createObjectURL(blob);
-        anchor.click();
-
-        window.URL.revokeObjectURL(previewUrl);
-      },
-      'image/png',
-      1
-    );
-  }
 
   useEffect(() => {
     if (!completedCrop || !previewCanvasRef.current || !imgRef.current) {
@@ -143,14 +135,14 @@ export default function LoadoutForm() {
 
     const scaleX = image.naturalWidth / image.width;
     const scaleY = image.naturalHeight / image.height;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     const pixelRatio = window.devicePixelRatio;
 
     canvas.width = crop.width * pixelRatio;
     canvas.height = crop.height * pixelRatio;
 
     ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-    ctx.imageSmoothingQuality = 'high';
+    ctx.imageSmoothingQuality = "high";
 
     ctx.drawImage(
       image,
@@ -165,43 +157,11 @@ export default function LoadoutForm() {
     );
   }, [completedCrop]);
 
-  function blobCreationFromURL(inputURI) {
-  
-    var binaryVal;
-
-    // mime extension extraction
-    var inputMIME = inputURI.split(',')[0].split(':')[1].split(';')[0];
-
-    // Extract remaining part of URL and convert it to binary value
-    if (inputURI.split(',')[0].indexOf('base64') >= 0)
-        binaryVal = atob(inputURI.split(',')[1]);
-
-    // Decoding of base64 encoded string
-    else
-        binaryVal = unescape(inputURI.split(',')[1]);
-
-    // Computation of new string in which hexadecimal
-    // escape sequences are replaced by the character 
-    // it represents
-
-    // Store the bytes of the string to a typed array
-    var blobArray = [];
-    for (var index = 0; index < binaryVal.length; index++) {
-        blobArray.push(binaryVal.charCodeAt(index));
-    }
-
-    return new Blob([blobArray], {
-        type: inputMIME
-    });
-}
-
-
-  const handleClassChange = () => { };
 
   const onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
-      reader.addEventListener('load', () => setUpImg(reader.result));
+      reader.addEventListener("load", () => setUpImg(reader.result));
 
       reader.readAsDataURL(e.target.files[0]);
     }
@@ -230,7 +190,7 @@ export default function LoadoutForm() {
           name="name"
         />
         <FormHelperText id="component-helper-text">
-          paste text from arma 3 arsenal
+          paste text from ARMA arsenal
         </FormHelperText>
         <TextField
           color="secondary"
@@ -248,11 +208,7 @@ export default function LoadoutForm() {
             className={classes.formControl}
           >
             <FormLabel component="legend">Role:</FormLabel>
-            <RadioGroup
-              name="role"
-              //   value={classValue}
-              onChange={handleClassChange}
-            >
+            <RadioGroup name="role">
               <FormControlLabel
                 value="Rifleman"
                 control={<Radio />}
@@ -289,12 +245,7 @@ export default function LoadoutForm() {
             className={classes.formControl}
           >
             <FormLabel component="legend">Camo:</FormLabel>
-            <RadioGroup
-              aria-label="gender"
-              name="role"
-              //   value={classValue}
-              onChange={handleClassChange}
-            >
+            <RadioGroup aria-label="gender" name="camo">
               <FormControlLabel
                 value="Multicam"
                 control={<Radio />}
@@ -333,7 +284,7 @@ export default function LoadoutForm() {
             component="fieldset"
             className={classes.formControl}
           >
-            <FormLabel component="legend">Extra gear:</FormLabel>
+            <FormLabel component="legend">Tags:</FormLabel>
             <FormGroup>
               <FormControlLabel
                 control={<Checkbox name="nighttime" />}
@@ -355,7 +306,6 @@ export default function LoadoutForm() {
                 control={<Checkbox name="jtac" />}
                 label="JTAC/ Drone Operator"
               />
-
               <FormControlLabel
                 control={<Checkbox name="ghillie" />}
                 label="Ghillie suit"
@@ -371,31 +321,39 @@ export default function LoadoutForm() {
           Click to upload Image
           <input type="file" hidden onChange={onSelectFile} />
         </Button>
-        {true ?
+        {imageIsLoaded && (
+          <Button
+            className={classes.button}
+            type="submit"
+            variant="contained"
+            color="primary"
+          >
+            save loadout
+            <SendIcon />
+          </Button>
+        )}
+        <Box display="flex">
           <ReactCrop
+            className={classes.uploadedImage}
             src={upImg}
             onImageLoaded={onLoad}
             crop={crop}
             onChange={(c) => setCrop(c)}
             onComplete={(c) => setCompletedCrop(c)}
+            minHeight={100}
           />
-          :
-          <p>waiting</p>
-        }
-        <canvas
-          ref={previewCanvasRef}
-          // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
-          style={{
-            width: Math.round(completedCrop?.width ?? 0)/2,
-            height: Math.round(completedCrop?.height ?? 0)/2
-          }}
-        />
-        <Button className={classes.button} type="submit" variant="contained" color="primary">
-          send
-          <SendIcon></SendIcon>
-        </Button>
-      </form>
 
-    </Grid >
+          <canvas
+            ref={previewCanvasRef}
+            //set size of preview if image is uploaded
+            style={{
+              width: imageIsLoaded ? 500 * aspectRatio : 0,
+              height: imageIsLoaded ? 500 : 0,
+              paddingLeft: 10,
+            }}
+          />
+        </Box>
+      </form>
+    </Grid>
   );
 }
