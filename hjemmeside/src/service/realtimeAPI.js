@@ -1,20 +1,30 @@
 import firebase from "firebase";
 import { storage } from "../firebase";
 
+const db = firebase.database();
+
 export const postLoadout = (loadout) => {
     loadout.uid = firebase.auth().currentUser.uid;
     console.log("posting loadout:", loadout);
-    var postListRef = firebase.database().ref('loadouts/' + firebase.auth().currentUser.uid);
+    var postListRef = db.ref('loadouts/' + firebase.auth().currentUser.uid);
     var newPostRef = postListRef.push();
     return newPostRef.set(loadout);
 }
+export const deleteLoadout = async (userid, loadoutid, loadoutname) => {
+    console.log("delete loadout:",userid, loadoutid);
+    var loadout = db.ref('loadouts/' + userid + '/' + loadoutid);
+    var result = await loadout.remove();
+    console.log(result);
+    //delete image
+    storage.ref(`/loadouts/${loadoutname}`).delete();
+}
+
 export const getLoadouts = () => {
 
     const dbRef = firebase.database().ref();
     return dbRef.child("loadouts").get().then((snapshot) => {
         if (snapshot.exists()) {
             return snapshot.val();
-            console.log(snapshot.val());
         } else {
             console.log("No data available");
         }

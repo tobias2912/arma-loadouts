@@ -18,19 +18,6 @@ export default function AddNew() {
     const classes = useStyles();
     const [formData, updateFormData] = React.useState(initialFormData);
 
-    const handleChange = (e) => {
-        updateFormData({
-            ...formData,
-
-            // Trimming any whitespace
-            [e.target.name]: e.target.value.trim()
-        });
-    };
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log(formData);
-        // ... submit to API or something
-    };
     return (
         <>
             <Header showSearch={false}></Header>

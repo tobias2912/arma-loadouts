@@ -33,8 +33,8 @@ export default function Header({ filterLoadouts, showSearch = true }) {
         </Box>
         {showSearch && (
           <FilterBar
-            filterLoadouts={filterLoadouts}
             className={classes.filterTopSearch}
+            filterLoadouts={filterLoadouts}
           ></FilterBar>
         )}
         <Button sx={{ flexGrow: 0 }}>{user.displayName}</Button>

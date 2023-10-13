@@ -9,6 +9,7 @@ export default function Loadoutlist({ loadouts }) {
           <LoadoutCard
             key={_i}
             loadout={loadouts[userloadouts][item]}
+            id={item}
           ></LoadoutCard>
         ))
       )}
