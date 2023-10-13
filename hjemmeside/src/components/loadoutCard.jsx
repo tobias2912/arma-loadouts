@@ -24,7 +24,6 @@ import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import { deleteLoadout, getLoadoutImg } from "../service/realtimeAPI";
 import { useEffect } from "react";
 import { UserContext } from "../UserProvider";
-import { useHistory } from "react-router-dom";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -36,7 +35,6 @@ export default function LoadoutCard({ loadout, id }) {
   const [popupOpen, setPopupOpen] = useState(false);
   const [image, setImage] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
-
   const [DeleteOpen, SetDeleteOpen] = React.useState(false);
 
   const handleDeleteOpen = () => {

@@ -12,7 +12,7 @@ import { useStyles } from "../styles";
 export default function Home() {
   const classes = useStyles();
   const [loadouts, setLoadouts] = useState([]);
-  const [filteredLoadouts, setFilteredLoadouts] = useState([]);
+  const [filteredLoadouts, setFilteredLoadouts] = useState({});
 
   const getLoadouts = () => {
     if (process.env.REACT_APP_RUN_OFFLINE === "TRUE") {
@@ -44,20 +44,25 @@ export default function Home() {
   }, []);
 
   const filterLoadouts = (searchevent) => {
-    const searchterm = searchevent.target.value;
+    const searchterm = searchevent.target.value.toLowerCase();
+    console.log("filtering for ",searchterm);
     let filteredAcc = {};
-    console.log(loadouts);
     for(var userid in loadouts){
+      console.log("------ for user", userid);
       let userloadouts = loadouts[userid];
       filteredAcc[userid] = {};
       for(var loadoutid in userloadouts){
         let loadout = userloadouts[loadoutid];
-        console.log(userid);
-        console.log(loadout.name);
-        filteredAcc[userid][loadoutid]= loadout;
+        if(loadout.name.toLowerCase().includes(searchterm)){
+          console.log("match with",loadout.name);
+          filteredAcc[userid][loadoutid]= loadout;
+        }
       }
     }
     setFilteredLoadouts(filteredAcc);
+    console.log(typeof(filteredAcc));
+    console.log(Object.keys(filteredAcc));
+    console.log("found", Object.keys(filteredAcc).length, "user results");
   };
 
   return (
