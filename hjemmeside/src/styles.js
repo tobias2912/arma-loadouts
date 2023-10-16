@@ -115,4 +115,15 @@ export const useStyles = makeStyles((theme) => ({
         alignItems: "space-between",
         justifyContent: "space-between",
     },
+    sidebar: {
+        width: "250px",
+        backgroundColor: "black",
+        display:"flex",
+        flexDirection:"column"
+    },
+    contentWrapper: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "stretch"
+    }
 }));

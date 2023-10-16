@@ -28,6 +28,11 @@ import SendIcon from "@material-ui/icons/Send";
 import { useHistory } from "react-router-dom";
 import Alert from "@material-ui/lab/Alert";
 import "react-image-crop/dist/ReactCrop.css";
+import {
+  loadoutCamos,
+  loadoutTags,
+  loadoutTypes,
+} from "../consts/loadoutConsts";
 
 export default function LoadoutForm() {
   const classes = useStyles();
@@ -203,33 +208,15 @@ export default function LoadoutForm() {
           >
             <FormLabel component="legend">Role:</FormLabel>
             <RadioGroup name="role">
-              <FormControlLabel
-                value="Rifleman"
-                control={<Radio />}
-                label="Rifleman"
-              />
-              <FormControlLabel
-                value="Marksman"
-                control={<Radio />}
-                label="Marksman"
-              />
-
-              <FormControlLabel
-                value="Heavy weapons"
-                control={<Radio />}
-                label="Heavy weapons"
-              />
-
-              <FormControlLabel
-                value="Driver"
-                control={<Radio />}
-                label="Pilot/ Driver"
-              />
-              <FormControlLabel
-                value="other"
-                control={<Radio />}
-                label="Other"
-              />
+              {loadoutTypes.map((val, i) => {
+                return (
+                  <FormControlLabel
+                    value={val}
+                    control={<Radio />}
+                    label={val}
+                  />
+                );
+              })}
             </RadioGroup>
           </FormControl>
 
@@ -240,37 +227,15 @@ export default function LoadoutForm() {
           >
             <FormLabel component="legend">Camo:</FormLabel>
             <RadioGroup aria-label="gender" name="camo">
-              <FormControlLabel
-                value="Multicam"
-                control={<Radio />}
-                label="Multicam"
-              />
-              <FormControlLabel
-                value="Norwegian"
-                control={<Radio />}
-                label="Norwegian"
-              />
-              <FormControlLabel
-                value="Desert"
-                control={<Radio />}
-                label="Desert"
-              />
-
-              <FormControlLabel
-                value="Woodland"
-                control={<Radio />}
-                label="Woodland"
-              />
-              <FormControlLabel
-                value="Arctic"
-                control={<Radio />}
-                label="Arctic"
-              />
-              <FormControlLabel
-                value="other"
-                control={<Radio />}
-                label="Other"
-              />
+              {loadoutCamos.map((val, i) => {
+                return (
+                  <FormControlLabel
+                    value={val}
+                    control={<Radio />}
+                    label={val}
+                  />
+                );
+              })}
             </RadioGroup>
           </FormControl>
           <FormControl
@@ -280,30 +245,14 @@ export default function LoadoutForm() {
           >
             <FormLabel component="legend">Tags:</FormLabel>
             <FormGroup>
-              <FormControlLabel
-                control={<Checkbox name="nighttime" />}
-                label="night time"
-              />
-              <FormControlLabel
-                control={<Checkbox name="grenadier" />}
-                label="Grenadier"
-              />
-              <FormControlLabel
-                control={<Checkbox name="medic" />}
-                label="Medic"
-              />
-              <FormControlLabel
-                control={<Checkbox name="frogman" />}
-                label="Frogman"
-              />
-              <FormControlLabel
-                control={<Checkbox name="jtac" />}
-                label="JTAC/ Drone Operator"
-              />
-              <FormControlLabel
-                control={<Checkbox name="ghillie" />}
-                label="Ghillie suit"
-              />
+              {loadoutTags.map((val, i) => {
+                return (
+                  <FormControlLabel
+                    control={<Checkbox name={val}/>}
+                    label={val}
+                  />
+                );
+              })}
             </FormGroup>
           </FormControl>
         </Box>

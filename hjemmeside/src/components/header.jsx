@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useStyles } from "../styles";
 import { UserContext } from "../UserProvider";
-import FilterBar from "./FilterBar";
+import SearchBar from "./SearchBar";
 
 export default function Header({ filterLoadouts, showSearch = true }) {
   const classes = useStyles();
@@ -31,11 +31,11 @@ export default function Header({ filterLoadouts, showSearch = true }) {
             </Link>
           </Button>
         </Box>
-        {showSearch && (
-          <FilterBar
+        {false && (
+          <SearchBar
             className={classes.filterTopSearch}
             filterLoadouts={filterLoadouts}
-          ></FilterBar>
+          ></SearchBar>
         )}
         <Button sx={{ flexGrow: 0 }}>{user.displayName}</Button>
       </Toolbar>

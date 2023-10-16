@@ -29,7 +29,7 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-export default function LoadoutCard({ loadout, id }) {
+export default function LoadoutCard({ loadout, loadoutId }) {
   const user = useContext(UserContext);
   const classes = useStyles();
   const [popupOpen, setPopupOpen] = useState(false);
@@ -51,7 +51,7 @@ export default function LoadoutCard({ loadout, id }) {
         setImage(res);
       })
       .catch((err) => {});
-  }, []);
+  }, [loadoutId]);
 
   const handlePopupClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -62,13 +62,13 @@ export default function LoadoutCard({ loadout, id }) {
 
   const DeleteLoadoutConfirmed = async () => {
     handleDeleteClose();
-    await deleteLoadout(loadout.uid, id, loadout.name);
+    await deleteLoadout(loadout.uid, loadoutId, loadout.name);
     setIsDeleted(true);
   };
 
   const copy = () => {
     navigator.clipboard.writeText(loadout.items);
-    console.log("copy loadout id " + id);
+    console.log("copy loadout id " + loadoutId);
     console.log(loadout);
     setPopupOpen(true);
   };
@@ -92,7 +92,7 @@ export default function LoadoutCard({ loadout, id }) {
                   onClick={copy}
                 ></FileCopyIcon>
               </Tooltip>
-              {(loadout.uid === user.uid || true) && (
+              {loadout.uid === user.uid && (
                 <Tooltip title="delete">
                   <DeleteForeverIcon
                     className={classes.icon}

@@ -1,11 +1,9 @@
-import {
-  CircularProgress,
-  Container,
-} from "@material-ui/core";
+import { Box, CircularProgress, Container } from "@material-ui/core";
 import firebase from "firebase";
 import React, { useEffect, useState } from "react";
 import Header from "../components/header";
 import Loadoutlist from "../components/loadoutlist";
+import Sidebar from "../components/sidebar";
 import { mockedLoadouts } from "../service/realtimeAPI";
 import { useStyles } from "../styles";
 
@@ -16,10 +14,10 @@ export default function Home() {
 
   const getLoadouts = () => {
     if (process.env.REACT_APP_RUN_OFFLINE === "TRUE") {
-        console.log("running offline");
-        setLoadouts(mockedLoadouts);
-        setFilteredLoadouts(mockedLoadouts);
-        return;
+      console.log("running offline");
+      setLoadouts(mockedLoadouts);
+      setFilteredLoadouts(mockedLoadouts);
+      return;
     }
     const dbRef = firebase.database().ref();
     return dbRef
@@ -43,41 +41,39 @@ export default function Home() {
     getLoadouts();
   }, []);
 
-  const filterLoadouts = (searchevent) => {
-    const searchterm = searchevent.target.value.toLowerCase();
-    console.log("filtering for ",searchterm);
-    let filteredAcc = {};
-    for(var userid in loadouts){
-      console.log("------ for user", userid);
+  const filterLoadouts = (searchterm, type, camo, attributeList) => {
+    console.log("filtering for ", searchterm);
+    let mathingLoadouts = {};
+    for (var userid in loadouts) {
       let userloadouts = loadouts[userid];
-      filteredAcc[userid] = {};
-      for(var loadoutid in userloadouts){
+      mathingLoadouts[userid] = {};
+      for (var loadoutid in userloadouts) {
         let loadout = userloadouts[loadoutid];
-        if(loadout.name.toLowerCase().includes(searchterm)){
-          console.log("match with",loadout.name);
-          filteredAcc[userid][loadoutid]= loadout;
+        if (loadout.name.toLowerCase().includes(searchterm)) {
+          console.log("match with", loadout);
+          mathingLoadouts[userid][loadoutid] = loadout;
         }
       }
     }
-    setFilteredLoadouts(filteredAcc);
-    console.log(typeof(filteredAcc));
-    console.log(Object.keys(filteredAcc));
-    console.log("found", Object.keys(filteredAcc).length, "user results");
+    setFilteredLoadouts(mathingLoadouts);
   };
 
   return (
     <>
-      <Header filterLoadouts={filterLoadouts}></Header>
-      <Container className={classes.rootContainer}>
-        {loadouts.length === 0 ? (
-          <>
-            <CircularProgress />
-            <p>loading</p>
-          </>
-        ) : (
-          <Loadoutlist loadouts={filteredLoadouts}></Loadoutlist>
-        )}
-      </Container>
+      <Header filterLoadouts={filterLoadouts} />
+      <Box className={classes.contentWrapper}>
+        <Sidebar filterLoadouts={filterLoadouts}></Sidebar>
+        <Container className={classes.rootContainer}>
+          {loadouts.length === 0 ? (
+            <>
+              <CircularProgress />
+              <p>loading</p>
+            </>
+          ) : (
+            <Loadoutlist loadouts={filteredLoadouts}></Loadoutlist>
+          )}
+        </Container>
+      </Box>
     </>
   );
 }
