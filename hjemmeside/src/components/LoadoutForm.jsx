@@ -63,7 +63,8 @@ export default function LoadoutForm() {
         attributes.push(element);
       }
     });
-    attributes.push(e.target.camo.value);
+    let camo = e.target.camo.value;
+    attributes.push(camo);
     let loadout = {
       name: e.target.name.value,
       items: e.target.items.value,
@@ -71,7 +72,7 @@ export default function LoadoutForm() {
       role: e.target.role.value,
       attributes: attributes,
     };
-    if (!ValidateInput(loadout)) {
+    if (!ValidateInput(loadout, camo)) {
       //error
     } else {
       postLoadout(loadout);
@@ -79,29 +80,40 @@ export default function LoadoutForm() {
     }
   };
 
-  const postCroppedImage = (name) => {
+  function postCroppedImage(name) {
     const canvas = previewCanvasRef.current;
     console.log(canvas);
     canvas.toBlob(function (blob) {
       console.log(blob);
       postImage(name, blob, history);
     });
-  };
+  }
 
-  const ValidateInput = (loadout) => {
-    if (loadout.items.length < 20 && false) {
+  function ValidateInput(loadout, camo) {
+    if (loadout.items.length < 20) {
       //probably not valid
-      setErrorMsg("Exported loadout does not seem to be correct");
-      setOpen(true);
-      return false;
+      // DisplayError("Exported loadout does not seem to be correct");
+      // return false;
     }
     if (loadout.name.length < 3) {
-      setErrorMsg("Too short name");
-      setOpen(true);
+      DisplayError("Too short name");
+      return false;
+    }
+    if (!loadout.role) {
+      DisplayError("Missing Role");
+      return false;
+    }
+    if (!camo) {
+      DisplayError("Missing Camo");
       return false;
     }
     return true;
-  };
+  }
+
+  function DisplayError(msg) {
+    setErrorMsg(msg);
+    setOpen(true);
+  }
 
   const onLoad = useCallback((img) => {
     imgRef.current = img;
@@ -261,23 +273,25 @@ export default function LoadoutForm() {
             <SendIcon />
           </Button>
         )}
-        <Box display="flex">
-          <ReactCrop
-            className={classes.uploadedImage}
-            src={upImg}
-            onImageLoaded={onLoad}
-            crop={crop}
-            onChange={(c) => setCrop(c)}
-            onComplete={(c) => setCompletedCrop(c)}
-            minHeight={100}
-          />
+        <Box display="flex" alignItems="flex-start">
+          <Box className={classes.imagePreview}>
+            <ReactCrop
+              className={classes.uploadedImage}
+              src={upImg}
+              onImageLoaded={onLoad}
+              crop={crop}
+              onChange={(c) => setCrop(c)}
+              onComplete={(c) => setCompletedCrop(c)}
+              minHeight={100}
+            />
+          </Box>
 
           <canvas
             ref={previewCanvasRef}
             //set size of preview if image is uploaded
             style={{
-              width: imageIsLoaded ? 500 * aspectRatio : 0,
-              height: imageIsLoaded ? 500 : 0,
+              maxWidth: imageIsLoaded ? 500 * aspectRatio : 0,
+              maxHeight: imageIsLoaded ? 500 : 0,
               paddingLeft: 10,
             }}
           />

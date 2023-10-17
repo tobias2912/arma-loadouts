@@ -27,7 +27,12 @@ export const useStyles = makeStyles((theme) => ({
         backgroundColor: colors.background.dark,
     },
     uploadedImage: {
-        maxHeight: "500px"
+        maxWidth:"100%"
+    },
+    imagePreview:{
+        maxWidth:"600px",
+        maxHeight:"600px"
+
     },
     icon: {
         '&:hover': {
