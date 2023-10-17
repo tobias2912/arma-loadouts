@@ -33,6 +33,7 @@ import {
   loadoutTags,
   loadoutRoles,
 } from "../consts/loadoutConsts";
+import LoadoutCard from "./loadoutCard";
 
 export default function LoadoutForm() {
   const classes = useStyles();
@@ -40,6 +41,7 @@ export default function LoadoutForm() {
   const history = useHistory();
   const [openError, setOpen] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [previewLoadout, setPreviewLoadout] = useState({});
 
   //crop states
   const aspectRatio = 3 / 4;
@@ -55,24 +57,36 @@ export default function LoadoutForm() {
   /**
    * gather fields from form, validate and send to server
    */
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleUpdate = (e) => {
+    let form = document.getElementById("form");
+    let loadout = getloadoutFromForm(form);
+    console.log("preview loadout: ", loadout);
+    console.log(imgRef);
+    setPreviewLoadout(loadout);
+  };
+  function getloadoutFromForm(form){
     let attributes = [];
     loadoutTags.forEach((element) => {
       if (document.getElementById(element).checked) {
         attributes.push(element);
       }
     });
-    let camo = e.target.camo.value;
+    let camo = form.camo?.value;
     attributes.push(camo);
     let loadout = {
-      name: e.target.name.value,
-      items: e.target.items.value,
+      name: form.name?.value,
+      items: form.items?.value,
       author: user.displayName,
-      role: e.target.role.value,
+      role: form.role?.value,
       attributes: attributes,
     };
-    if (!ValidateInput(loadout, camo)) {
+    return loadout;
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let loadout = getloadoutFromForm(e.target); 
+    if (!ValidateInput(loadout, e.target.camo?.value)) {
       //error
     } else {
       postLoadout(loadout);
@@ -173,10 +187,12 @@ export default function LoadoutForm() {
         <Alert severity="warning">{errorMsg}</Alert>
       </Snackbar>
       <form
+        id="form"
         className={classes.loadoutform}
         noValidate
         autoComplete="off"
         onSubmit={handleSubmit}
+        onChange={handleUpdate}
       >
         <FormHelperText id="component-helper-text">Loadout Name</FormHelperText>
         <TextField
@@ -273,7 +289,7 @@ export default function LoadoutForm() {
             <SendIcon />
           </Button>
         )}
-        <Box display="flex" alignItems="flex-start">
+        <Box display="flex" alignItems="flex-start" justifyContent="space-evenly" flexWrap="wrap">
           <Box className={classes.imagePreview}>
             <ReactCrop
               className={classes.uploadedImage}
@@ -286,15 +302,13 @@ export default function LoadoutForm() {
             />
           </Box>
 
-          <canvas
-            ref={previewCanvasRef}
-            //set size of preview if image is uploaded
-            style={{
-              maxWidth: imageIsLoaded ? 500 * aspectRatio : 0,
-              maxHeight: imageIsLoaded ? 500 : 0,
-              paddingLeft: 10,
-            }}
-          />
+          {imageIsLoaded && (
+            <LoadoutCard
+              loadout={previewLoadout}
+              id="test"
+              thumbnail={previewCanvasRef}
+            ></LoadoutCard>
+          )}
         </Box>
       </form>
     </Grid>

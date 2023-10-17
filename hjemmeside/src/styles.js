@@ -30,9 +30,9 @@ export const useStyles = makeStyles((theme) => ({
         maxWidth:"100%"
     },
     imagePreview:{
-        maxWidth:"600px",
-        maxHeight:"600px"
-
+        maxWidth:"300px",
+        maxHeight:"300px",
+        marginTop:"1rem"
     },
     icon: {
         '&:hover': {

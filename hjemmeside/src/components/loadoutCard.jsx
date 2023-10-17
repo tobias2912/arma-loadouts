@@ -29,7 +29,11 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-export default function LoadoutCard({ loadout, loadoutId }) {
+export default function LoadoutCard({
+  loadout,
+  loadoutId,
+  thumbnail: thumbnailRef,
+}) {
   const user = useContext(UserContext);
   const classes = useStyles();
   const [popupOpen, setPopupOpen] = useState(false);
@@ -46,6 +50,10 @@ export default function LoadoutCard({ loadout, loadoutId }) {
   };
 
   useEffect(() => {
+    if (thumbnailRef) {
+      // setImage(thumbnailRef);
+      return;
+    }
     getLoadoutImg(loadout.name)
       .then((res) => {
         setImage(res);
@@ -105,11 +113,11 @@ export default function LoadoutCard({ loadout, loadoutId }) {
             </Box>
           </Grid>
           <Grid item xs={4} className={classes.imageContainer}>
-            {image ? (
-              <img src={image} className={classes.img}></img>
-            ) : (
-              <p>loading</p>
+            {thumbnailRef && (
+              <canvas ref={thumbnailRef} className={classes.img} />
             )}
+            {image && <img src={image} className={classes.img}></img>}
+            {!image && !thumbnailRef && <p>loading</p>}
           </Grid>
           <Grid item xs={8}>
             <Box
