@@ -117,13 +117,21 @@ export const useStyles = makeStyles((theme) => ({
     },
     sidebar: {
         width: "250px",
-        backgroundColor: "black",
-        display:"flex",
-        flexDirection:"column"
+        backgroundColor: colors.background.medium,
+        display: "flex",
+        flexDirection: "column",
+        padding: "10px",
+        alignItems: "stretch"
     },
     contentWrapper: {
         display: "flex",
         flexDirection: "row",
         alignItems: "stretch"
+    },
+    sideBarItem: {
+        display: "flex",
+        flexDirection: "column",
+        marginBottom:"20px"
     }
+
 }));

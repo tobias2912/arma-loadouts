@@ -41,28 +41,67 @@ export default function Home() {
     getLoadouts();
   }, []);
 
-  const filterLoadouts = (searchterm, type, camo, attributeList) => {
-    console.log("filtering for ", searchterm);
+  function filterLoadouts(searchterm, role, camo, attributeList, author) {
+    console.log(
+      "filtering for ",
+      searchterm,
+      role,
+      camo,
+      attributeList,
+      author
+    );
     let mathingLoadouts = {};
     for (var userid in loadouts) {
       let userloadouts = loadouts[userid];
       mathingLoadouts[userid] = {};
       for (var loadoutid in userloadouts) {
         let loadout = userloadouts[loadoutid];
-        if (loadout.name.toLowerCase().includes(searchterm)) {
-          console.log("match with", loadout);
+        console.log("comparing loadout", loadout.name);
+        if (doesMatch(loadout, searchterm, role, camo, attributeList, author)) {
+          console.log("match with", loadout.name);
           mathingLoadouts[userid][loadoutid] = loadout;
         }
       }
     }
     setFilteredLoadouts(mathingLoadouts);
-  };
+  }
+
+  function doesMatch(loadout, searchterm, role, camo, attributeList, author) {
+    if (searchterm && !loadout.name.toLowerCase().includes(searchterm)) {
+      console.log("no match with ", loadout.name);
+      return false;
+    }
+    if (camo && loadout.attributes && !loadout.attributes.includes(camo)) {
+      console.log("no match with ", loadout.name);
+      return false;
+    }
+    if (role && loadout.role !== role) {
+      console.log("no match with ", loadout.name);
+      return false;
+    }
+    if (author && loadout.author !== author && author !== "Any") {
+      console.log("no match with ", loadout.name);
+      return false;
+    }
+    let valid = true;
+    attributeList.forEach((attr) => {
+      console.log("check", attr);
+      if (loadout.attributes) {
+        console.log("attr present", loadout.attributes, attr);
+        if (!loadout.attributes.includes(attr)) {
+          console.log("no match with ", loadout.name);
+          valid = false;
+        }
+      }
+    });
+    return valid;
+  }
 
   return (
     <>
       <Header filterLoadouts={filterLoadouts} />
       <Box className={classes.contentWrapper}>
-        <Sidebar filterLoadouts={filterLoadouts}></Sidebar>
+        <Sidebar filterLoadouts={filterLoadouts} loadouts={loadouts}></Sidebar>
         <Container className={classes.rootContainer}>
           {loadouts.length === 0 ? (
             <>

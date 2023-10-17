@@ -17,28 +17,22 @@ import {
   getAttributes,
   loadoutCamos,
   loadoutTags,
-  loadoutTypes,
+  loadoutRoles as loadoutRoles,
 } from "../consts/loadoutConsts";
 import { useStyles } from "../styles";
 import { UserContext } from "../UserProvider";
 import SearchBar from "./SearchBar";
 
-export default function Sidebar({ filterLoadouts }) {
+export default function Sidebar({ filterLoadouts, loadouts }) {
   const classes = useStyles();
   const user = useContext(UserContext);
   const [search, setSearch] = useState("");
-  const [type, setType] = useState("");
+  const [role, setRole] = useState("");
+  const [author, setAuthor] = useState("");
   const [camo, setCamo] = useState("");
-  const [switchStates, setStates] = useState(toCheckedDict(loadoutTags));
+  const [switchStates, setStates] = useState(tagsToButtonDict(loadoutTags));
 
-  function handleChange(event) {
-    let newdict = {};
-    Object.assign(newdict, switchStates);
-    newdict[event.target.name] = !newdict[event.target.name];
-    setStates(newdict);
-  }
-
-  function toCheckedDict(list) {
+  function tagsToButtonDict(list) {
     let dict = {};
     list.forEach((element) => {
       dict[element] = false;
@@ -49,12 +43,19 @@ export default function Sidebar({ filterLoadouts }) {
   function filterSearch(e) {
     const searchterm = e.target.value.toLowerCase();
     setSearch(searchterm);
-    filterLoadouts(searchterm, type, camo, getAttributeList());
+    filterLoadouts(searchterm, role, camo, getAttributeList(), author);
   }
 
-  function getAttributeList() {
+  function getAttributeState() {
+    return getAttributeList(switchStates);
+  }
+  function getAttributeList(dict) {
+    if(!dict){
+        console.warn("no attributes");
+        return [];
+    }
     let attributes = [];
-    for (const [name, enabled] of Object.entries(switchStates)) {
+    for (const [name, enabled] of Object.entries(dict)) {
       if (enabled) {
         attributes.push(name);
       }
@@ -62,40 +63,90 @@ export default function Sidebar({ filterLoadouts }) {
     return attributes;
   }
 
+  function handleAttribute(event) {
+    let newdict = {};
+    Object.assign(newdict, switchStates);
+    newdict[event.target.name] = !newdict[event.target.name];
+    setStates(newdict);
+    let l = Object.entries(loadouts);
+    filterLoadouts(search, role, camo, getAttributeList(newdict), author);
+  }
+  function handleRole(e) {
+    let val = e.target.value;
+    setRole(val);
+    filterLoadouts(search, val, camo, getAttributeState(), author);
+  }
+  function handleCamo(e) {
+    let val = e.target.value;
+    setCamo(val);
+    filterLoadouts(search, role, val, getAttributeState(), author);
+  }
+  function handleAuthor(e) {
+    let val = e.target.value;
+    setAuthor(val);
+    filterLoadouts(search, role, camo, getAttributeState(), val);
+  }
+
+  function getUserList() {
+    let arr = [];
+    arr.push("Any");
+    Object.keys(loadouts).map((key, i) => {
+      let userloadouts = loadouts[key];
+      let firstLoadout = Object.values(userloadouts)[0];
+      arr.push(firstLoadout.author);
+    });
+    return arr;
+  }
+
   return (
     <Box className={classes.sidebar}>
-      filter:
-      <SearchBar
-        filterLoadouts={filterSearch}
-        className={classes.filterTopSearch}
-      ></SearchBar>
-      types:
-      <Select>
-        {loadoutTypes.map((attr, i) => {
-          return <MenuItem value={attr}>{attr}</MenuItem>;
+      <Box className={classes.sideBarItem}>
+        <SearchBar
+          filterLoadouts={filterSearch}
+          className={classes.filterTopSearch}
+        ></SearchBar>
+      </Box>
+      <Box className={classes.sideBarItem}>
+        Author:
+        <Select onChange={handleAuthor}>
+          {getUserList().map((key, i) => {
+            return <MenuItem value={key}>{key}</MenuItem>;
+          })}
+        </Select>
+      </Box>
+      <Box className={classes.sideBarItem}>
+        Roles:
+        <Select onChange={handleRole}>
+          {loadoutRoles.map((attr, i) => {
+            return <MenuItem value={attr}>{attr}</MenuItem>;
+          })}
+        </Select>
+      </Box>
+      <Box className={classes.sideBarItem}>
+        Camo:
+        <Select onChange={handleCamo}>
+          {loadoutCamos.map((attr, i) => {
+            return <MenuItem value={attr}>{attr}</MenuItem>;
+          })}
+        </Select>
+      </Box>
+      <Box className={classes.sideBarItem}>
+        <InputLabel id="type">Filters:</InputLabel>
+        {loadoutTags.map((attr, i) => {
+          return (
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={switchStates[attr]}
+                  onChange={(e) => handleAttribute(e)}
+                  name={attr}
+                ></Switch>
+              }
+              label={attr}
+            />
+          );
         })}
-      </Select>
-      camo:
-      <Select>
-        {loadoutCamos.map((attr, i) => {
-          return <MenuItem value={attr}>{attr}</MenuItem>;
-        })}
-      </Select>
-      <InputLabel id="type">Tags</InputLabel>
-      {loadoutTags.map((attr, i) => {
-        return (
-          <FormControlLabel
-            control={
-              <Switch
-                checked={switchStates[attr]}
-                onChange={(e) => handleChange(e)}
-                name={attr}
-              ></Switch>
-            }
-            label={attr}
-          />
-        );
-      })}
+      </Box>
     </Box>
   );
 }

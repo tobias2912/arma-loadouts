@@ -31,7 +31,7 @@ import "react-image-crop/dist/ReactCrop.css";
 import {
   loadoutCamos,
   loadoutTags,
-  loadoutTypes,
+  loadoutRoles,
 } from "../consts/loadoutConsts";
 
 export default function LoadoutForm() {
@@ -57,26 +57,12 @@ export default function LoadoutForm() {
    */
   const handleSubmit = (e) => {
     e.preventDefault();
-
     let attributes = [];
-    if (e.target.nighttime.checked) {
-      attributes.push("Night time");
-    }
-    if (e.target.grenadier.checked) {
-      attributes.push("Grenadier");
-    }
-    if (e.target.medic.checked) {
-      attributes.push("medic");
-    }
-    if (e.target.frogman.checked) {
-      attributes.push("frogman");
-    }
-    if (e.target.jtac.checked) {
-      attributes.push("JTAC/ Drone");
-    }
-    if (e.target.ghillie.checked) {
-      attributes.push("Ghillie suit");
-    }
+    loadoutTags.forEach((element) => {
+      if (document.getElementById(element).checked) {
+        attributes.push(element);
+      }
+    });
     attributes.push(e.target.camo.value);
     let loadout = {
       name: e.target.name.value,
@@ -208,7 +194,7 @@ export default function LoadoutForm() {
           >
             <FormLabel component="legend">Role:</FormLabel>
             <RadioGroup name="role">
-              {loadoutTypes.map((val, i) => {
+              {loadoutRoles.map((val, i) => {
                 return (
                   <FormControlLabel
                     value={val}
@@ -248,7 +234,7 @@ export default function LoadoutForm() {
               {loadoutTags.map((val, i) => {
                 return (
                   <FormControlLabel
-                    control={<Checkbox name={val}/>}
+                    control={<Checkbox name={val} id={val} />}
                     label={val}
                   />
                 );

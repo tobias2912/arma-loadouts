@@ -1,4 +1,4 @@
-export const loadoutTypes = [
+export const loadoutRoles = [
     "Rifleman",
     "Marksman",
     "Heavy weapons",

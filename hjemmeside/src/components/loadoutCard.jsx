@@ -72,7 +72,9 @@ export default function LoadoutCard({ loadout, loadoutId }) {
     console.log(loadout);
     setPopupOpen(true);
   };
-  if(isDeleted){return <></>}
+  if (isDeleted) {
+    return <></>;
+  }
   return (
     <Card className={classes.loadoutCard}>
       <CardContent>
